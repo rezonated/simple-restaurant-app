@@ -14,7 +14,7 @@ import com.placeholder.PlaceHolder;
  * @author Vanan Andreas
  */
 public class userCRUD extends javax.swing.JFrame {
-    
+
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/restaurant";
     static final String USER = "root";
@@ -22,20 +22,20 @@ public class userCRUD extends javax.swing.JFrame {
     static Connection conn;
     static Statement stmt;
     static ResultSet rs;
-    
+
     public userCRUD() {
         initComponents();
         this.setLocationRelativeTo(getRootPane());
         try {
-            
+
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     /**
@@ -74,11 +74,10 @@ public class userCRUD extends javax.swing.JFrame {
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "", "", "", ""
+                "id_user", "username", "password"
             }
         ));
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,6 +107,11 @@ public class userCRUD extends javax.swing.JFrame {
         });
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -116,22 +120,24 @@ public class userCRUD extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Kosongkan ID jika ingin menambahkan");
+        jLabel4.setAlignmentY(0.0F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(insertButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(updateButton)
-                        .addGap(0, 73, Short.MAX_VALUE))
+                        .addComponent(updateButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -141,16 +147,16 @@ public class userCRUD extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(userid, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(username)
-                            .addComponent(password))))
+                            .addComponent(password)))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loadUser)
-                .addGap(112, 112, 112))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(loadUser)
+                        .addGap(112, 112, 112))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +165,7 @@ public class userCRUD extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(loadUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
@@ -183,7 +189,7 @@ public class userCRUD extends javax.swing.JFrame {
                             .addComponent(updateButton)
                             .addComponent(deleteButton)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -195,7 +201,7 @@ public class userCRUD extends javax.swing.JFrame {
             PreparedStatement pst = conn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -206,17 +212,22 @@ public class userCRUD extends javax.swing.JFrame {
     }//GEN-LAST:event_useridActionPerformed
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
-        try {
-            String sql = "INSERT INTO user (username, password) VALUES(?,?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, username.getText());
-            pst.setString(2, password.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Data Telah Disimpan");
-            pst.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+        if ("".equals(username.getText()) || "".equals(password.getText())) {
+            JOptionPane.showMessageDialog(null, "Silahkan lengkapi data");
+        } else {
+
+            try {
+                String sql = "INSERT INTO user (username, password) VALUES(?,?)";
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, username.getText());
+                pst.setString(2, password.getText());
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Data telah disimpan");
+                pst.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_insertButtonActionPerformed
 
@@ -227,18 +238,39 @@ public class userCRUD extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        try {
-            String sql = "DELETE FROM user WHERE id_user=('" + userid.getText() + "');";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
-            userid.setText("");
-            username.setText("");
-            password.setText("");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if ("".equals(userid.getText()) || "".equals(username.getText()) || "".equals(password.getText())) {
+            JOptionPane.showMessageDialog(null, "Silahkan lengkapi data");
+        } else {
+            try {
+                String sql = "DELETE FROM user WHERE id_user=('" + userid.getText() + "');";
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
+                pst.close();
+                userid.setText("");
+                username.setText("");
+                password.setText("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if ("".equals(userid.getText()) || "".equals(username.getText()) || "".equals(password.getText())) {
+            JOptionPane.showMessageDialog(null, "Silahkan lengkapi data");
+        } else {
+            try {
+                String query = "UPDATE user SET username='" + username.getText() + "' ,password='" + password.getText() + "' WHERE id_user='" + userid.getText() + "'";
+                PreparedStatement pst = conn.prepareStatement(query);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Data berhasil di-update");
+                pst.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
