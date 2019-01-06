@@ -24,6 +24,11 @@ public class loginApp extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    public String getLoggedUser() {
+        return userField.getText();
     }
 
     @SuppressWarnings("unchecked")
@@ -128,6 +133,9 @@ public class loginApp extends javax.swing.JFrame {
             if (rs.next()) {
                 if (userField.getText().equals(rs.getString("username")) && passField.getText().equals(rs.getString("password"))) {
                     JOptionPane.showMessageDialog(this, "Berhasil login, selamat datang " + userField.getText());
+                    String query = "UPDATE user SET login_flag='1' WHERE username='" + userField.getText() + "'";
+                    PreparedStatement pst = conn.prepareStatement(query);
+                    pst.execute();
                     new menuRestaurant().setVisible(true);
                     dispose();
                 }
@@ -140,17 +148,17 @@ public class loginApp extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
-        try{
-            String sql = "SELECT * FROM admin WHERE adminame='"+ userField.getText()+"' AND password='"+passField.getText()+"'";
+        try {
+            String sql = "SELECT * FROM admin WHERE adminame='" + userField.getText() + "' AND password='" + passField.getText() + "'";
             rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                if(userField.getText().equals(rs.getString("adminame")) && passField.getText().equals(rs.getString("password"))){
+            if (rs.next()) {
+                if (userField.getText().equals(rs.getString("adminame")) && passField.getText().equals(rs.getString("password"))) {
                     JOptionPane.showMessageDialog(this, "Berhasil login sebagai admin, selamat datang.");
                     new AdminPanel().setVisible(true);
                     dispose();
                 }
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_adminButtonActionPerformed

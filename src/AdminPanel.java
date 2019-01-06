@@ -30,10 +30,12 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         userButton = new javax.swing.JButton();
         menuButton = new javax.swing.JButton();
+        transaksi = new javax.swing.JButton();
+        menuButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 27)); // NOI18N
         jLabel1.setText("Admin Panel");
 
         userButton.setText("User");
@@ -44,6 +46,26 @@ public class AdminPanel extends javax.swing.JFrame {
         });
 
         menuButton.setText("Menu");
+        menuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuButtonActionPerformed(evt);
+            }
+        });
+
+        transaksi.setText("Transaksi");
+        transaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transaksiActionPerformed(evt);
+            }
+        });
+
+        menuButton1.setText("Logout");
+        menuButton1.setActionCommand("Logout");
+        menuButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,27 +73,39 @@ public class AdminPanel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(userButton)
                         .addGap(18, 18, 18)
-                        .addComponent(menuButton))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(menuButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)))
+                        .addComponent(menuButton1)
+                        .addGap(0, 11, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userButton)
-                    .addComponent(menuButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(menuButton)
+                    .addComponent(menuButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(transaksi)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        menuButton1.getAccessibleContext().setAccessibleName("Logout");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -80,6 +114,21 @@ public class AdminPanel extends javax.swing.JFrame {
         new userCRUD().setVisible(true);
         dispose();
     }//GEN-LAST:event_userButtonActionPerformed
+
+    private void menuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButtonActionPerformed
+        new menuCRUD().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuButtonActionPerformed
+
+    private void transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaksiActionPerformed
+        new transaksiList().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_transaksiActionPerformed
+
+    private void menuButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButton1ActionPerformed
+        new loginApp().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,6 +168,8 @@ public class AdminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton menuButton;
+    private javax.swing.JButton menuButton1;
+    private javax.swing.JButton transaksi;
     private javax.swing.JButton userButton;
     // End of variables declaration//GEN-END:variables
 }
